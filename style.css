@@ -1,3 +1,8 @@
 canvas{
     position:fixed;
 }
+body{
+    overflow: hidden;
+    background-color: black;
+    color:white;
+}
