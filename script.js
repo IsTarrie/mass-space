@@ -9,7 +9,7 @@ const cv = [[0,0,0],[0,0,0]];//颜色向量
 const ccm = 0.1;//Color Change Max
 for(let i=0;i<colors.length;i++){for(let j=0;j<3;j++){cv[i][j]= (Math.random()-0.5)*ccm;}}
 //动画参数
-const areaW_scale = 0.04;//单个区域在全屏状态下所占屏幕短距的比例
+const areaW_scale = 0.055;//单个区域在全屏状态下所占屏幕短距的比例
 const areaRW_full = SRshort * areaW_scale;//单个区域在全屏状态下的实际宽度.RW:real width
 
 const w = Math.ceil(screen.width / areaRW_full);
@@ -57,8 +57,8 @@ setSomethingAboutSize();
 const massPoints = [];
     //第一类质量点:质量在一定范围内波动,平滑移动.碰到边缘会反弹
 const massPoints_1 = [];//质量点数组
-const mP1_mass = [short/7,short/2.5];//质量范围
-const mP1_speed = [short/10,short/5];//速度范围(单位距离/1000ms)
+const mP1_mass = [short/7,short/2];//质量范围
+const mP1_speed = [short/10,short/2.5];//速度范围(单位距离/1000ms)
 const mP1_square_max=1.6;//允许占用的最大面积
 var mP1_square_canBeUsed = w * h * mP1_square_max;
     //创建P1
@@ -126,15 +126,15 @@ function computeAll(){
     moveMassPoints_1();
 }
 //空间_数据
-const min_r = 0.3;
-const max_r = 0.8;
+const min_r = 0.2;
+const max_r = 0.85;
 //绘制
 function drawAll(){
     buffer.clearRect(0,0,bufferEl.width,bufferEl.height);
 
     for(let x = 0;x < w;x++){
         for(let y = 0;y < h;y++){
-            var r=0;
+            var r=0;//var r=1;
             //通过与质量点的距离决定大小
             for(let i = 0;i < massPoints.length;i++){
                 const point = massPoints[i];
@@ -142,8 +142,8 @@ function drawAll(){
                 const dy = point[0][1] -y;
                 const d = Math.sqrt(dx*dx + dy*dy);
                 if(d < point[2]){
-                    let n = 1-d/point[2];
-                    if(n>r){r = n;}
+                    let n = 1-d/point[2];//let n = d/point[2];
+                    if(n>r){r = n;}//if(n<r){r = n;}
                 }
             }
             r = (max_r-min_r)*r+min_r;
