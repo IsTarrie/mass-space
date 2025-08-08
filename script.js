@@ -3,7 +3,7 @@ const updateTime = 20;
 const SRshort = Math.min(screen.width,screen.height);//屏幕短边的实际长度 SRshort:screen_real_short
 const nS = screen.width / screen.height;//屏幕宽高比
 //颜色
-const colors = [[120,0,200],[0, 100, 255]];
+const colors = [[20,100,250],[150, 250, 255]];
 const c1 = colors[0];const c2 = colors[1];//简写
 const cv = [[0,0,0],[0,0,0]];//颜色向量
 const ccm = 0.1;//Color Change Max
@@ -57,9 +57,9 @@ setSomethingAboutSize();
 const massPoints = [];
     //第一类质量点:质量在一定范围内波动,平滑移动.碰到边缘会反弹
 const massPoints_1 = [];//质量点数组
-const mP1_mass = [short/7,short/2];//质量范围
-const mP1_speed = [short/10,short/2.5];//速度范围(单位距离/1000ms)
-const mP1_square_max=1.6;//允许占用的最大面积
+const mP1_mass = [short/7,short/2.5];//质量范围
+const mP1_speed = [short/3.4,short/1.5];//速度范围(单位距离/1000ms)
+const mP1_square_max=2;//允许占用的最大面积
 var mP1_square_canBeUsed = w * h * mP1_square_max;
     //创建P1
 function createMassPoint_1(){
@@ -146,6 +146,7 @@ function drawAll(){
                     if(n>r){r = n;}//if(n<r){r = n;}
                 }
             }
+			buffer.globalAlpha=r;
             r = (max_r-min_r)*r+min_r;
 
             const areaRcenter = [(x+0.5)*areaRW,(y+0.5)*areaRW];//area Real center
@@ -160,8 +161,9 @@ function drawAll(){
             gradient.addColorStop(0,`rgb(${c1[0]},${c1[1]},${c1[2]})`);
             gradient.addColorStop(1,`rgb(${c2[0]},${c2[1]},${c2[2]})`);
             buffer.fillStyle = gradient;
-
+			
             buffer.fill();
+			buffer.globalAlpha=1;
         }
     }
 }
